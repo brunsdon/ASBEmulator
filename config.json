@@ -19,7 +19,27 @@
             }
           }
         ],
-        "Topics": []
+        "Topics": [
+          {
+            "Name": "topic.1",
+            "Properties": {
+              "DefaultMessageTimeToLive": "PT1H",
+              "DuplicateDetectionHistoryTimeWindow": "PT20S",
+              "RequiresDuplicateDetection": false
+            },
+            "Subscriptions": [
+              {
+                "Name": "subscription.1",
+                "Properties": {
+                  "LockDuration": "PT1M",
+                  "MaxDeliveryCount": 3,
+                  "DefaultMessageTimeToLive": "PT1H",
+                  "DeadLetteringOnMessageExpiration": false
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
     "Logging": { "Type": "File" }
