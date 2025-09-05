@@ -9,12 +9,12 @@
 pip install azure-servicebus
 ```
 
-**Python dotenv (read .env):**
+**Python [dotenv (helper to read .env)](https://pypi.org/project/python-dotenv/):**
 ```bash
 pip install python-dotenv
 ```
 
-**Deloy to Docker:**
+**Deploy to Docker:**
 ```bash
 docker compose up -d
 ```
