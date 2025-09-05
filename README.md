@@ -4,12 +4,12 @@
 
 ## Installation
 
-**Azure Service Bus Client:**
+**[Azure Service Bus client library for Python](https://pypi.org/project/azure-servicebus/):**
 ```bash
 pip install azure-servicebus
 ```
 
-**Python [dotenv (helper to read .env)](https://pypi.org/project/python-dotenv/):**
+**[python-dotenv](https://pypi.org/project/python-dotenv/):**
 ```bash
 pip install python-dotenv
 ```
@@ -17,6 +17,60 @@ pip install python-dotenv
 **Deploy to Docker:**
 ```bash
 docker compose up -d
+```
+
+## Configuration
+
+Edit `config.json` to define queues, topics, and subscriptions. Example for topic:
+
+```json
+"Topics": [
+	{
+		"Name": "topic.1",
+		"Properties": {
+			"DefaultMessageTimeToLive": "PT1H",
+			"DuplicateDetectionHistoryTimeWindow": "PT20S",
+			"RequiresDuplicateDetection": false
+		},
+		"Subscriptions": [
+			{
+				"Name": "subscription.1",
+				"Properties": {
+					"LockDuration": "PT1M",
+					"MaxDeliveryCount": 3,
+					"DefaultMessageTimeToLive": "PT1H",
+					"DeadLetteringOnMessageExpiration": false
+				}
+			}
+		]
+	}
+]
+```
+
+## Smoke Tests
+
+### Queue Smoke Test
+
+Run the queue smoke test to verify end-to-end messaging:
+
+```bash
+python sb_queue_smoke_test.py
+```
+
+### Topic Smoke Test
+
+Run the topic smoke test to verify topic and subscription messaging:
+
+```bash
+python sb_topic_smoke_test.py
+```
+
+Both scripts require the `SB_CONN` environment variable to be set to your Service Bus connection string.
+
+Example (Windows):
+
+```powershell
+setx SB_CONN "Endpoint=sb://localhost/;UseDevelopmentEmulator=true;"
 ```
 
 ## References
