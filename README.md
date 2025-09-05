@@ -14,11 +14,17 @@ pip install azure-servicebus
 pip install python-dotenv
 ```
 
+**Deloy to Docker:**
+```bash
+docker compose up -d
+```
+
 ## References
 
 - https://learn.microsoft.com/en-us/azure/service-bus-messaging/overview-emulator
 - https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/servicebus/azure-servicebus
 - https://learn.microsoft.com/en-us/python/api/overview/azure/servicebus-readme?view=azure-python
+- https://app.pluralsight.com/library/courses/azure-service-bus-in-depth/table-of-contents
 
 
 
