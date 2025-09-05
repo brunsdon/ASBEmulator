@@ -9,11 +9,16 @@
 pip install azure-servicebus
 ```
 
-**Python dotenv:**
+**Python dotenv (read .env):**
 ```bash
 pip install python-dotenv
 ```
 
 ## References
 
+- https://learn.microsoft.com/en-us/azure/service-bus-messaging/overview-emulator
 - https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/servicebus/azure-servicebus
+- https://learn.microsoft.com/en-us/python/api/overview/azure/servicebus-readme?view=azure-python
+
+
+
