@@ -14,7 +14,6 @@ QUEUE_NAME = "queue.1"
 CONN_STR = os.getenv("SB_CONN")
 if not CONN_STR:
     print("ERROR: Please set SB_CONN environment variable to your Service Bus connection string.")
-    print('Example (Windows):  setx SB_CONN "Endpoint=sb://localhost/;UseDevelopmentEmulator=true;"')
     sys.exit(1)
 
 def main():

@@ -4,42 +4,52 @@ import uuid
 import time
 from dotenv import load_dotenv
 from azure.servicebus import ServiceBusClient, ServiceBusMessage
+from azure.servicebus.management import ServiceBusAdministrationClient
 
 load_dotenv()
 
-# Topic and subscription names (update as needed)
-TOPIC_NAME = "topic.1"
-SUBSCRIPTION_NAME = "subscription.1"
+TOPIC_NAME = "smoketest.topic"
+SUBSCRIPTION_NAME = "smoketest.subscription"
 
-# Read connection string from env var
 CONN_STR = os.getenv("SB_CONN")
 if not CONN_STR:
     print("ERROR: Please set SB_CONN environment variable to your Service Bus connection string.")
     sys.exit(1)
 
+def ensure_topic_and_subscription():
+    admin_client = ServiceBusAdministrationClient.from_connection_string(CONN_STR)
+    # Create topic if it doesn't exist
+    if not admin_client.get_topic_runtime_properties(TOPIC_NAME):
+        print(f"Creating topic: {TOPIC_NAME}")
+        admin_client.create_topic(TOPIC_NAME)
+    else:
+        print(f"Topic {TOPIC_NAME} already exists.")
+    # Create subscription if it doesn't exist
+    if not admin_client.get_subscription_runtime_properties(TOPIC_NAME, SUBSCRIPTION_NAME):
+        print(f"Creating subscription: {SUBSCRIPTION_NAME}")
+        admin_client.create_subscription(TOPIC_NAME, SUBSCRIPTION_NAME)
+    else:
+        print(f"Subscription {SUBSCRIPTION_NAME} already exists.")
+
 def main():
-    # Unique payload to verify round-trip
+    ensure_topic_and_subscription()
     run_id = str(uuid.uuid4())
-    body = f"hello from python topic smoke test | run_id={run_id}"
+    body = f"hello from python dynamic topic smoke test | run_id={run_id}"
 
     print(f"Using connection string: {CONN_STR}")
     print(f"Target topic: {TOPIC_NAME}")
     print(f"Target subscription: {SUBSCRIPTION_NAME}")
     print("Opening client...")
 
-    # Create a ServiceBusClient and send/receive a message
     with ServiceBusClient.from_connection_string(CONN_STR) as client:
-        # 1) SEND
         print("Sending a test message to topic...")
         with client.get_topic_sender(topic_name=TOPIC_NAME) as sender:
             msg = ServiceBusMessage(body)
             sender.send_messages(msg)
         print("Message sent.")
 
-        # Small delay to allow broker to commit
         time.sleep(0.5)
 
-        # 2) RECEIVE
         print("Receiving message from subscription...")
         with client.get_subscription_receiver(
             topic_name=TOPIC_NAME,
@@ -49,16 +59,13 @@ def main():
             for message in receiver:
                 text = str(message)
                 print(f"Received: {text}")
-                # verify it’s the one we just sent
                 if run_id in text:
                     receiver.complete_message(message)
                     print("✅ End-to-end OK (matched run_id and completed message).")
                     return
                 else:
-                    # Not our message (subscription had older messages) — settle and keep looking
                     receiver.complete_message(message)
                     print("Info: received a different message; continuing to look...")
-
         print("⚠️ Did not receive our test message within the wait window.")
         sys.exit(2)
 

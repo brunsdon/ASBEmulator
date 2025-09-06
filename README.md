@@ -23,6 +23,8 @@ docker compose up -d
 
 Edit `config.json` to define queues, topics, and subscriptions. Example for topic:
 
+> **Note:** The Service Bus Emulator does not support management operations (such as creating topics or subscriptions) via the Azure SDK. All topics and subscriptions must be defined in `config.json` and created when the emulator starts. Dynamic creation in code will fail with connection errors.
+
 ```json
 "Topics": [
 	{
@@ -65,13 +67,25 @@ Run the topic smoke test to verify topic and subscription messaging:
 python sb_topic_smoke_test.py
 ```
 
-Both scripts require the `SB_CONN` environment variable to be set to your Service Bus connection string.
+### Dynamic Topic Smoke Test
 
-Example (Windows):
+`sb_topic_dynamic_smoke_test.py` attempts to create topics and subscriptions in code using the Azure SDK:
 
-```powershell
-setx SB_CONN "Endpoint=sb://localhost/;UseDevelopmentEmulator=true;"
+```bash
+python sb_topic_dynamic_smoke_test.py
 ```
+
+> **Note:** This test will fail when using the Service Bus Emulator, as the emulator does not support management operations (topic/subscription creation) via the SDK. Use this test only against real Azure Service Bus. For emulator, define all entities in `config.json` before starting.
+
+## Environment Variables
+
+The Service Bus connection string should be set in the `.env` file as follows:
+
+```
+SB_CONN="Endpoint=sb://localhost/;UseDevelopmentEmulator=true;"
+```
+
+This will be loaded automatically by the smoke test scripts. You can also set it as a system environment variable if preferred.
 
 ## References
 
