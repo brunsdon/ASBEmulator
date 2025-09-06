@@ -34,11 +34,11 @@ def main():
         t.start()
     for t in threads:
         t.join()
-    print("✅ Concurrent consumer test completed.")
+    print("PASS: Concurrent consumer test completed.")
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as ex:
-        print(f"❌ Failure: {ex}")
+        print(f"FAIL: {ex}")
         sys.exit(3)

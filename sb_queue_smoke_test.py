@@ -46,19 +46,19 @@ def main():
                 # verify it’s the one we just sent
                 if run_id in text:
                     receiver.complete_message(message)
-                    print("✅ End-to-end OK (matched run_id and completed message).")
+                    print("PASS: End-to-end OK (matched run_id and completed message).")
                     return
                 else:
                     # Not our message (queue had older messages) — settle and keep looking
                     receiver.complete_message(message)
                     print("Info: received a different message; continuing to look...")
 
-        print("⚠️ Did not receive our test message within the wait window.")
-        sys.exit(2)
+    print("WARNING: Did not receive our test message within the wait window.")
+    sys.exit(2)
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as ex:
-        print(f"❌ Failure: {ex}")
+        print(f"FAIL: {ex}")
         sys.exit(3)

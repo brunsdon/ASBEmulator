@@ -38,14 +38,13 @@
                 }
               }
             ]
-          }
-          ,
+          },
           {
             "Name": "pubsub.topic",
             "Properties": {
               "DefaultMessageTimeToLive": "PT1H",
               "DuplicateDetectionHistoryTimeWindow": "PT20S",
-              "RequiresDuplicateDetection": false
+              "RequiresDuplicateDetection": true
             },
             "Subscriptions": [
               {
@@ -62,6 +61,8 @@
         ]
       }
     ],
-    "Logging": { "Type": "File" }
+    "Logging": {
+      "Type": "File"
+    }
   }
 }

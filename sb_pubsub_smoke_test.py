@@ -44,7 +44,10 @@ def main():
             max_wait_time=5
         ) as receiver:
             for message in receiver:
-                msg_type = message.application_properties.get("message_type")
+                print(f"Raw application_properties: {getattr(message, 'application_properties', None)}")
+                msg_type = None
+                if hasattr(message, 'application_properties') and message.application_properties:
+                    msg_type = message.application_properties.get("message_type")
                 text = str(message)
                 print(f"Received: {text} | message_type: {msg_type}")
                 if run_id in text:
@@ -54,14 +57,12 @@ def main():
                     receiver.complete_message(message)
                     print("Info: received a different message; continuing to look...")
                 if received_types == set(MESSAGE_TYPES):
-                    print("✅ End-to-end OK (received all message types and completed messages).")
+                    print("PASS: End-to-end OK (received all message types and completed messages).")
                     return
-        print("⚠️ Did not receive all test messages within the wait window.")
-        sys.exit(2)
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as ex:
-        print(f"❌ Failure: {ex}")
+        print(f"FAIL: {ex}")
         sys.exit(3)

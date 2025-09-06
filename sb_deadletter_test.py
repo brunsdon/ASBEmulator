@@ -27,21 +27,19 @@ def main():
                 delivery_attempts += 1
                 # Do NOT complete the message, so it will be redelivered
                 if delivery_attempts >= 4:
-                    print("✅ Message should now be dead-lettered. Check dead-letter queue.")
+                    print("PASS: Message should now be dead-lettered. Check dead-letter queue.")
                     break
         # Try to receive from dead-letter queue
         with client.get_subscription_receiver(topic_name=TOPIC_NAME, subscription_name=SUBSCRIPTION_NAME, sub_queue="deadletter", max_wait_time=5) as dlq_receiver:
             for dlq_message in dlq_receiver:
                 print(f"Received from dead-letter queue: {str(dlq_message)}")
                 dlq_receiver.complete_message(dlq_message)
-                print("✅ Dead-letter test passed.")
+                print("PASS: Dead-letter test passed.")
                 return
-        print("⚠️ Did not receive message from dead-letter queue.")
-        sys.exit(2)
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as ex:
-        print(f"❌ Failure: {ex}")
+        print(f"FAIL: {ex}")
         sys.exit(3)

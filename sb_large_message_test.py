@@ -25,14 +25,14 @@ def main():
             for message in receiver:
                 print(f"Received message of size: {len(str(message))}")
                 receiver.complete_message(message)
-                print("✅ Large message test passed.")
+                print("PASS: Large message test passed.")
                 return
-        print("⚠️ Did not receive large message.")
-        sys.exit(2)
+    print("WARNING: Did not receive large message.")
+    sys.exit(2)
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as ex:
-        print(f"❌ Failure: {ex}")
+        print(f"FAIL: {ex}")
         sys.exit(3)

@@ -30,14 +30,14 @@ def main():
                 receiver.complete_message(message)
                 received += 1
         if received == 1:
-            print("✅ Duplicate detection test passed (only one message received).")
+            print("PASS: Duplicate detection test passed (only one message received).")
         else:
-            print(f"⚠️ Duplicate detection failed (received {received} messages).")
+            print(f"WARNING: Duplicate detection failed (received {received} messages).")
             sys.exit(2)
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as ex:
-        print(f"❌ Failure: {ex}")
+        print(f"FAIL: {ex}")
         sys.exit(3)

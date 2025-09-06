@@ -50,6 +50,17 @@ Edit `config.json` to define queues, topics, and subscriptions. Example for topi
 ```
 
 ## Smoke Tests
+### Running All Tests
+
+You can run all test scripts in sequence using `run_all_tests.py`. This script will execute each test, print the output, and summarize which tests passed or failed.
+
+To run all tests:
+
+```bash
+python run_all_tests.py
+```
+
+At the end, you'll see a summary of results and a list of any failed tests for quick troubleshooting.
 ### Test Scripts and Details
 
 #### sb_queue_smoke_test.py

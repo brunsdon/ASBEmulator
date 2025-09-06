@@ -27,14 +27,14 @@ def main():
                 receiver.complete_message(message)
                 received += 1
                 if received == BATCH_SIZE:
-                    print("✅ Batch test passed.")
+                    print("PASS: Batch test passed.")
                     return
-        print("⚠️ Did not receive all batch messages.")
-        sys.exit(2)
+    print("WARNING: Did not receive all batch messages.")
+    sys.exit(2)
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as ex:
-        print(f"❌ Failure: {ex}")
+        print(f"FAIL: {ex}")
         sys.exit(3)
