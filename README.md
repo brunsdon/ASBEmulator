@@ -82,17 +82,6 @@ Starts multiple consumers on the same subscription to test concurrent message pr
 #### sb_delayed_delivery_test.py
 Schedules a message for future delivery and verifies it is received at the correct time. Tests support for scheduled (delayed) messages.
 
-### Queue Smoke Test
-
-Sends a message to a queue and verifies it can be received and completed. Use this to check basic queue functionality and connectivity.
-
-```bash
-python sb_queue_smoke_test.py
-```
-
-### Topic Smoke Test
-
-Sends a message to a topic and verifies it can be received from a subscription. Use this to check basic topic/subscription functionality and connectivity.
 ### Test Coverage Summary
 
 | Script                        | Purpose                                                      | Emulator Support |
@@ -107,41 +96,6 @@ Sends a message to a topic and verifies it can be received from a subscription. 
 | sb_duplicate_test.py          | Duplicate detection                                          | Yes              |
 | sb_concurrent_consumer_test.py| Multiple consumers on one subscription                       | Yes              |
 | sb_delayed_delivery_test.py   | Scheduled (delayed) message delivery                         | Yes (if supported)|
-
-
-```bash
-python sb_topic_smoke_test.py
-```
-
-### Dynamic Topic Smoke Test
-
-
-Attempts to create topics and subscriptions in code using the Azure SDK. Only works with real Azure Service Bus, not the emulator. Use to validate management API integration.
-
-```bash
-python sb_topic_dynamic_smoke_test.py
-```
-
-> **Note:** This test will fail when using the Service Bus Emulator, as the emulator does not support management operations (topic/subscription creation) via the SDK. Use this test only against real Azure Service Bus. For emulator, define all entities in `config.json` before starting.
-
-
-
-### Pub/Sub Smoke Test
-
-Sends messages with different types in the header to a topic, and receives them from a single subscription. Demonstrates pub/sub filtering by message type in code.
-Sends and receives a large message (near max size) to test emulator limits and error handling. Useful for validating message size constraints.
-Sends and receives a batch of messages to test throughput, ordering, and batch API support.
-Sends a message and intentionally does not complete it, causing it to exceed max delivery count and move to the dead-letter queue. Verifies dead-letter queue handling and error scenarios.
-Sends two messages with the same MessageId to test duplicate detection. Only one should be received if duplicate detection is enabled in config.
-Starts multiple consumers on the same subscription to test concurrent message processing and load balancing. Useful for scaling scenarios.
-Schedules a message for future delivery and verifies it is received at the correct time. Tests support for scheduled (delayed) messages.
-
-```bash
-
-python sb_pubsub_smoke_test.py
-```
-
-This test uses the `pubsub.topic` and `pubsub.subscription` defined in your config. Messages are sent with a `message_type` property in the header and received from the single subscription.
 
 
 ## Troubleshooting
