@@ -106,7 +106,7 @@ Schedules a message for future delivery and verifies it is received at the corre
 | sb_deadletter_test.py         | Dead-letter queue handling                                   | Yes              |
 | sb_duplicate_test.py          | Duplicate detection                                          | Yes              |
 | sb_concurrent_consumer_test.py| Multiple consumers on one subscription                       | Yes              |
-| sb_delayed_delivery_test.py   | Scheduled (delayed) message delivery                         | Yes (if supported)|
+| sb_delayed_delivery_test.py   | Scheduled (delayed) message delivery                         | Yes              |
 
 
 ## Troubleshooting
