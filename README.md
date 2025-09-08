@@ -4,15 +4,18 @@
 
 ## Installation
 
+
 **[Azure Service Bus client library for Python](https://pypi.org/project/azure-servicebus/):**
 ```bash
-pip install azure-servicebus
+uv pip install azure-servicebus
 ```
 
 **[python-dotenv](https://pypi.org/project/python-dotenv/):**
 ```bash
-pip install python-dotenv
+uv pip install python-dotenv
 ```
+
+> Note: [uv](https://github.com/astral-sh/uv) is a fast Python package manager and can be used as a drop-in replacement for pip. If you don't have uv installed, follow instructions at https://github.com/astral-sh/uv.
 
 **Deploy to Docker:**
 ```bash
